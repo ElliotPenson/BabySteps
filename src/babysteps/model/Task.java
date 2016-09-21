@@ -1,11 +1,11 @@
-package babySteps;
+package babysteps.model;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
- * An encapsulation of a task and its subtasks. A B-tree structure is used.
- * Each node is a task. A node's children are the more specific tasks required
- * for completion.
+ * An encapsulation of a task and its subtasks. A B-tree structure with parent references is used.
+ * Each node is a task. A node's children are the more specific tasks required for completion.
  * 
  * @author Elliot Penson
  */
@@ -22,6 +22,11 @@ public class Task implements java.io.Serializable {
      * Flag to indicate if the task has been finished.
      */
     private boolean completed;
+    
+    /**
+     * The (more general) task above this one in the class tree.
+     */
+    private Optional<Task> parent;
 
     /**
      * List of children that represent jobs within this task.
@@ -31,6 +36,14 @@ public class Task implements java.io.Serializable {
     public Task(String title) {
         this.title = title;
         completed = false;
+        parent = Optional.empty();
+        subtasks = new ArrayList<Task>();
+    }
+    
+    public Task(String title, Task parent) {
+        this.title = title;
+        completed = false;
+        this.parent = Optional.of(parent);
         subtasks = new ArrayList<Task>();
     }
 
@@ -53,17 +66,9 @@ public class Task implements java.io.Serializable {
     public void setUncompleted() {
         completed = false;
     }
-
-    public void addSubtask(Task subtask) {
-        subtasks.add(subtask);
-    }
-
-    public int numberOfSubtasks() {
-        return subtasks.size();
-    }
-
-    public boolean hasSubtasks() {
-        return !subtasks.isEmpty();
+    
+    public Optional<Task> getParent() {
+        return parent;
     }
 
     public ArrayList<Task> getSubtasks() {
