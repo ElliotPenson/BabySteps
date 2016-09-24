@@ -1,6 +1,7 @@
 package babysteps.model;
 
 import java.util.List;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,10 +17,21 @@ public class TaskModel {
     private Task currentTask;
     
     /**
-     * Constructor.
+     * Name of the file used for serialization.
+     * TODO Let the user manipulate this value through JFileChooser.
+     */
+    private static final String SAVE_PATH = ".tasksave";
+    
+    /**
+     * Constructor. If a backup exists, load it. Otherwise instantiate new task tree.
      */
     public TaskModel() {
-        currentTask = new Task("Tasks");
+        File saveFile = new File(SAVE_PATH);
+        if(saveFile.exists() && !saveFile.isDirectory()) { 
+            deseriablize();
+        } else {
+            currentTask = new Task("Tasks");
+        }
     }
     
     /**
@@ -81,16 +93,16 @@ public class TaskModel {
     }
     
     /**
-     * Save all tasks (including parents) to the given file.
+     * Save all tasks (including parents) to a file.
      * 
-     * @param file
      * @return true if successful, false otherwise
      */
-    public boolean serialize(String path) {
+    public boolean serialize() {
         try {
-            FileOutputStream fileOut = new FileOutputStream(path);
+            FileOutputStream fileOut = new FileOutputStream(SAVE_PATH);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(headTask());
+            Task head = headTask();
+            out.writeObject(head);
             out.close();
             fileOut.close();
             return true;
@@ -103,12 +115,11 @@ public class TaskModel {
     /**
      * Overwrite the entire model with a new task tree. The previous task tree is not saved.
      * 
-     * @param file
      * @return true if successful, false otherwise
      */
-    public boolean deseriablize(String path) {
+    public boolean deseriablize() {
         try {
-            FileInputStream fileIn = new FileInputStream(path);
+            FileInputStream fileIn = new FileInputStream(SAVE_PATH);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             currentTask = (Task) in.readObject();
             in.close();
