@@ -26,7 +26,7 @@ public class Task implements java.io.Serializable {
     /**
      * The (more general) task above this one in the class tree.
      */
-    private Optional<Task> parent;
+    private Task parent;
 
     /**
      * List of children that represent jobs within this task.
@@ -36,14 +36,13 @@ public class Task implements java.io.Serializable {
     public Task(String title) {
         this.title = title;
         completed = false;
-        parent = Optional.empty();
         subtasks = new ArrayList<Task>();
     }
     
     public Task(String title, Task parent) {
         this.title = title;
         completed = false;
-        this.parent = Optional.of(parent);
+        this.parent = parent;
         subtasks = new ArrayList<Task>();
     }
 
@@ -68,7 +67,11 @@ public class Task implements java.io.Serializable {
     }
     
     public Optional<Task> getParent() {
-        return parent;
+        if (parent == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(parent);
+        }
     }
 
     public ArrayList<Task> getSubtasks() {
