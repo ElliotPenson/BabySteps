@@ -8,6 +8,11 @@ import javax.swing.JButton;
 
 import babysteps.model.TaskModel;
 
+/**
+ * The first window the user sees.
+ * 
+ * @author ejnp
+ */
 public class IntroFrame extends FrameMixin {
 
     private static final long serialVersionUID = 1L;
@@ -34,6 +39,8 @@ public class IntroFrame extends FrameMixin {
         JButton editButton = new JButton("Edit Tasks");
         editButton.addActionListener(new EditButtonListener());
         add(editButton);
+        
+        centerFrame();
     }
     
     public class EditButtonListener implements ActionListener {

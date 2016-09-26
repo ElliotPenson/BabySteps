@@ -10,6 +10,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.stream.Collectors;
 
+/**
+ * Task management system. Stores a task tree and allows user interaction through various methods.
+ * Listeners are alerted through the observer patten. The class also gives serialization
+ * functionality.
+ * 
+ * @author Elliot Penson
+ */
 public class TaskModel extends Observable {
     
     /**
