@@ -46,7 +46,8 @@ public class IntroFrame extends FrameMixin {
     public class EditButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            // TODO
+            EditFrame edit = new EditFrame(model);
+            edit.setVisible(true);
         }
     }
     
