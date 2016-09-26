@@ -1,6 +1,7 @@
 package babysteps.model;
 
 import java.util.List;
+import java.util.Observable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.stream.Collectors;
 
-public class TaskModel {
+public class TaskModel extends Observable {
     
     /**
      * Top of the task B-tree. All subtasks should be contained within this instance.
@@ -46,6 +47,15 @@ public class TaskModel {
     }
     
     /**
+     * Find the size of the current task.
+     * 
+     * @return an integer
+     */
+    public int numberOfSubtasks() {
+        return currentTask.getSubtasks().size();
+    }
+    
+    /**
      * Return the head of the task tree.
      * 
      * @return a Task instance
@@ -55,28 +65,58 @@ public class TaskModel {
     }
     
     /**
-     * Add a child to the current task.
+     * Add a child to the current task and notify observers.
      * 
      * @param title
      */
     public void createTask(String title) {
         currentTask.getSubtasks().add(new Task(title, currentTask));
+        System.out.println("Creating a new task...");
+        setChanged();
+        notifyObservers();
     }
     
     /**
-     * Move down the tree to a specific task.
+     * Modify a subtask and notify observers.
+     * 
+     * @param taskNumber
+     * @param newTitle
+     */
+    public void retitleTask(int taskNumber, String newTitle) {
+        currentTask.getSubtasks().get(taskNumber).setTitle(newTitle);
+        setChanged();
+        notifyObservers();
+    }
+    
+    /**
+     * Remove a subtask from the current task and notify observers.
+     * 
+     * @param taskNumber
+     */
+    public void removeTask(int taskNumber) {
+        currentTask.getSubtasks().remove(taskNumber);
+        setChanged();
+        notifyObservers();
+    }
+    
+    /**
+     * Move down the tree to a specific task and notify observers.
      * 
      * @param taskNumber
      */
     public void enterTask(int taskNumber) {
         currentTask = currentTask.getSubtasks().get(taskNumber);
+        setChanged();
+        notifyObservers();
     }
     
     /**
-     * Go to the task above this one in the task tree.
+     * Go to the task above this one in the task tree and notify observers.
      */
     public void moveUp() {
         currentTask.getParent().ifPresent(t -> currentTask = t);
+        setChanged();
+        notifyObservers();
     }
     
     /**
