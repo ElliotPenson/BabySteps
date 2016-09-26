@@ -9,6 +9,11 @@ import javax.swing.JFrame;
 
 import babysteps.model.TaskModel;
 
+/**
+ * Add centering and model save functionality to JFrames.
+ * 
+ * @author ejnp
+ */
 public class FrameMixin extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -16,7 +21,7 @@ public class FrameMixin extends JFrame {
     protected TaskModel model;
     
     /**
-     * Constructor. Adds the ability
+     * Constructor.
      * 
      * @param model
      */
