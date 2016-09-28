@@ -77,4 +77,22 @@ public class Task implements java.io.Serializable {
     public ArrayList<Task> getSubtasks() {
         return subtasks;
     }
+    
+    /**
+     * Attempt to find the simplest, uncompleted task equal to or below this task.
+     * 
+     * @return Optional of type Task
+     */
+    public Optional<Task> leftmostUncompletedNode() {
+        if (completed) {
+            return Optional.empty();
+        } else {
+            for (Task subtask : subtasks) {
+                if (!subtask.completed()) {
+                    return subtask.leftmostUncompletedNode();
+                }
+            }
+            return Optional.of(this);
+        }
+    }
 }

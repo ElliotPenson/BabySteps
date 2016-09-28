@@ -2,6 +2,7 @@ package babysteps.model;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Optional;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -78,7 +79,6 @@ public class TaskModel extends Observable {
      */
     public void createTask(String title) {
         currentTask.getSubtasks().add(new Task(title, currentTask));
-        System.out.println("Creating a new task...");
         setChanged();
         notifyObservers();
     }
@@ -124,6 +124,15 @@ public class TaskModel extends Observable {
         currentTask.getParent().ifPresent(t -> currentTask = t);
         setChanged();
         notifyObservers();
+    }
+    
+    /**
+     * Wrapper around Task's leftmostUncompletedNode.
+     * 
+     * @return Optional of type Task
+     */
+    public Optional<Task> simplestTask () {
+        return currentTask.leftmostUncompletedNode();
     }
     
     /**
