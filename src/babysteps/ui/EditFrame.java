@@ -1,13 +1,12 @@
 package babysteps.ui;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,6 +24,8 @@ public class EditFrame extends FrameMixin implements Observer {
         
     private TaskList taskList;
     
+    private JPanel optionList;
+    
     /**
      * Constructor. Add the TaskList and option JButtons, resize, and center.
      * 
@@ -34,27 +35,34 @@ public class EditFrame extends FrameMixin implements Observer {
         super(model.getCurrentTask().getTitle(), model);
         model.addObserver(this);
         
-        setLayout(new FlowLayout());
-        
         taskList = new TaskList(model);
-        add(taskList);
-        
         setupOptionList();
+        establishLayout();
         
-        updateDimensions();
+        pack();
         centerFrame();
     }
     
     /**
-     * Increase or decrease the size of the frame to appropriately fit the components.
+     * Instantiate a GroupLayout. Organize the frame into a single resizable column.
      */
-    public void updateDimensions() {
-        int verticalMargin = 20;
-        int buttonHeight = 95;
-        taskList.maximizeSize();
-        Dimension taskListSize = taskList.getPreferredSize();
-        setSize(taskListSize.width + verticalMargin,
-                taskListSize.height + buttonHeight);
+    public void establishLayout() {
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        
+        layout.setHorizontalGroup(
+            layout.createSequentialGroup()
+               .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(taskList, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(optionList))
+        );
+        layout.setVerticalGroup(
+            layout.createSequentialGroup()
+                .addComponent(taskList, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(optionList)
+        );
     }
     
     /**
@@ -62,7 +70,7 @@ public class EditFrame extends FrameMixin implements Observer {
      * Tasks held by the TaskList.
      */
     public void setupOptionList() {
-        JPanel optionList = new JPanel();
+        optionList = new JPanel();
         optionList.setLayout(new GridLayout(2, 3));
         
         JButton createButton = new JButton("Create");
@@ -100,7 +108,7 @@ public class EditFrame extends FrameMixin implements Observer {
         optionList.add(enterButton);
         
         JButton finishButton = new JButton("Finish");
-        enterButton.addActionListener(new ActionListener() {
+        finishButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 throw new UnsupportedOperationException();
             }
@@ -111,12 +119,9 @@ public class EditFrame extends FrameMixin implements Observer {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 model.moveUp();
-                
             }
         });
         optionList.add(backButton);
-        
-        add(optionList);
     }
 
     /**
@@ -125,6 +130,6 @@ public class EditFrame extends FrameMixin implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         setTitle(model.getCurrentTask().getTitle());
-        updateDimensions();
+        pack();
     }
 }

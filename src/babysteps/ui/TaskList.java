@@ -1,6 +1,5 @@
 package babysteps.ui;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Observable;
 import java.util.Observer;
@@ -22,11 +21,6 @@ public class TaskList extends JList<String> implements Observer {
     private TaskModel model;
     
     /**
-     * Smallest possible width for the component.
-     */
-    private static final int MINIMUM_WIDTH = 250;
-    
-    /**
      * Constructor. Make a fresh TaskList with list items from the model.
      * 
      * @param model
@@ -37,17 +31,6 @@ public class TaskList extends JList<String> implements Observer {
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setFont(new Font("LucidaGrande", Font.PLAIN, 13));
         update(null, null);
-        maximizeSize();
-    }
-    
-    /**
-     * Extend the height of the JList to fit all tasks. Change the width to fit the largest title.
-     */
-    public void maximizeSize() {
-        setVisibleRowCount(model.numberOfSubtasks());
-        Dimension fittedListSize = getPreferredScrollableViewportSize();
-        int listWidth = Math.max(fittedListSize.width, MINIMUM_WIDTH);
-        setPreferredSize(new Dimension(listWidth, fittedListSize.height));
     }
 
     @Override
