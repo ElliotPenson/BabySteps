@@ -4,10 +4,14 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.stream.Stream;
 
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import babysteps.model.TaskModel;
 
@@ -42,6 +46,25 @@ public class TaskList extends JList<String> implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         setListData(model.subtaskNames().toArray(new String[0]));
+    }
+    
+    /**
+     * Disables all given buttons if no task is currently selected. Once the user clicks on a
+     * task in the list, all given buttons are enabled.
+     * 
+     * @param buttons
+     */
+    public void toggleButtonsOnSelection(JButton...buttons) {
+        Stream.of(buttons).forEach(c -> c.setEnabled(false));
+        addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (getSelectedIndex() == -1) {
+                    Stream.of(buttons).forEach(c -> c.setEnabled(false));
+                } else {
+                    Stream.of(buttons).forEach(c -> c.setEnabled(true));
+                }
+            }
+        });
     }
 
     /**

@@ -27,6 +27,7 @@ public class TaskSelectionFrame extends FrameMixin implements Runnable {
      */
     public TaskSelectionFrame(TaskModel model) {
         super("Next", model);
+        taskList = new TaskList(model);
     }
     
     /**
@@ -46,11 +47,11 @@ public class TaskSelectionFrame extends FrameMixin implements Runnable {
     @Override
     public void run() {
         JLabel selection = new JLabel("Please choose a main task.");
-        taskList = new TaskList(model);
         JButton button = new JButton("Enter");
+        taskList.toggleButtonsOnSelection(button);
         button.addActionListener(new EnterButtonListener());
         singleColumnLayout(selection, taskList, button);
-        
+
         pack();
         centerFrame();
         setVisible(true);

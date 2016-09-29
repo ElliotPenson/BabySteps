@@ -94,6 +94,8 @@ public class EditFrame extends FrameMixin implements Observer, Runnable {
             }
         });
         optionList.add(backButton);
+        
+        taskList.toggleButtonsOnSelection(retitleButton, deleteButton, enterButton, finishButton);
     }
 
     /**
