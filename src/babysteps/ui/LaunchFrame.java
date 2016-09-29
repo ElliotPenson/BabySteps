@@ -10,7 +10,7 @@ import babysteps.model.TaskModel;
 /**
  * The first window the user sees.
  * 
- * @author ejnp
+ * @author Elliot Penson
  */
 public class LaunchFrame extends FrameMixin implements Runnable {
 

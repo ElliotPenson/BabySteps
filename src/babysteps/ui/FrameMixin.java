@@ -15,7 +15,7 @@ import babysteps.model.TaskModel;
 /**
  * Add centering and model save functionality to JFrames.
  * 
- * @author ejnp
+ * @author Elliot Penson
  */
 public class FrameMixin extends JFrame {
 

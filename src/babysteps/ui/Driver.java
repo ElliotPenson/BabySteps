@@ -7,7 +7,7 @@ import babysteps.model.TaskModel;
 /**
  * Main function. Creates a model and loads the view.
  * 
- * @author ejnp
+ * @author Elliot Penson
  */
 public class Driver {
 

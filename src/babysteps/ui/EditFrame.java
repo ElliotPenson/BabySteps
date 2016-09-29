@@ -15,7 +15,7 @@ import babysteps.model.TaskModel;
 /**
  * A window for manipulation of the task tree.
  * 
- * @author ejnp
+ * @author Elliot Penson
  */
 public class EditFrame extends FrameMixin implements Observer, Runnable {
 

@@ -14,7 +14,7 @@ import babysteps.model.TaskModel;
 /**
  * A class to standardize the use of JList for holding tasks.
  * 
- * @author ejnp
+ * @author Elliot Penson
  */
 public class TaskList extends JList<String> implements Observer {
 

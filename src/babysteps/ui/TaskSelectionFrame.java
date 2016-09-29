@@ -12,7 +12,7 @@ import babysteps.model.TaskModel;
  * A frame that allows the user to choose a single subtask. The model provides the list of tasks.
  * Once a task is chosen, TaskSelectionFrame makes way for a SingleTaskFrame.
  * 
- * @author ejnp
+ * @author Elliot Penson
  */
 public class TaskSelectionFrame extends FrameMixin implements Runnable {
 

@@ -16,7 +16,7 @@ import babysteps.model.TaskModel;
  * subtask with the help of the model. This task represents the next "baby step." If such a task
  * cannot be found, the frame tells the user.
  * 
- * @author ejnp
+ * @author Elliot Penson
  */
 public class SingleTaskFrame extends FrameMixin implements Runnable {
 
