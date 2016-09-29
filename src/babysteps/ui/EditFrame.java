@@ -46,58 +46,22 @@ public class EditFrame extends FrameMixin implements Observer, Runnable {
         optionList.setLayout(new GridLayout(2, 3));
         
         JButton createButton = new JButton("Create");
-        createButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String newTitle = JOptionPane.showInputDialog("Enter new title:");
-                model.createTask(newTitle);
-            }
-        });
+        createButton.addActionListener(new CreateButtonListener());
         optionList.add(createButton);
-        
         JButton retitleButton = new JButton("Retitle");
-        retitleButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String newTitle = JOptionPane.showInputDialog("Enter new title:");
-                model.retitleTask(taskList.getSelectedIndex(), newTitle);
-            }
-        });
+        retitleButton.addActionListener(new RetitleButtonListener());
         optionList.add(retitleButton);
-        
         JButton deleteButton = new JButton("Delete");
-        deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                model.removeTask(taskList.getSelectedIndex());
-            }
-        });
+        deleteButton.addActionListener(new DeleteButtonListener());
         optionList.add(deleteButton);
-        
         JButton enterButton = new JButton("Enter");
-        enterButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                model.enterTask(taskList.getSelectedIndex());
-            }
-        });
+        enterButton.addActionListener(new EnterButtonListener());
         optionList.add(enterButton);
-        
         JButton finishButton = new JButton("Finish");
-        finishButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                model.completeTask(taskList.getSelectedIndex());
-            }
-        });
+        finishButton.addActionListener(new FinishButtonListener());
         optionList.add(finishButton);
-        
         JButton backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (model.getCurrentTask().getParent().isPresent()) {
-                    model.moveUp();
-                } else {
-                    setVisible(false);
-                    (new LaunchFrame(model)).run();
-                }
-            }
-        });
+        backButton.addActionListener(new BackButtonListener());
         optionList.add(backButton);
         
         taskList.toggleButtonsOnSelection(retitleButton, deleteButton, enterButton, finishButton);
@@ -121,5 +85,69 @@ public class EditFrame extends FrameMixin implements Observer, Runnable {
         pack();
         centerFrame();
         setVisible(true);
+    }
+    
+    /**
+     * A listener that makes a new task when notified.
+     */
+    private class CreateButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String newTitle = JOptionPane.showInputDialog(null, "Enter new title:", "Title",
+                    JOptionPane.PLAIN_MESSAGE);
+            model.createTask(newTitle);
+        }
+    }
+    
+    /**
+     * A listener that retitles the selected task when notified.
+     */
+    private class RetitleButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String newTitle = JOptionPane.showInputDialog(null, "Enter new title:", "Title",
+                    JOptionPane.PLAIN_MESSAGE);
+            model.retitleTask(taskList.getSelectedIndex(), newTitle);
+        }
+    }
+    
+    /**
+     * A listener that delete the selected task when notified.
+     */
+    private class DeleteButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            model.removeTask(taskList.getSelectedIndex());
+        }
+    }
+    
+    /**
+     * A listener that opens the selected task when notified.
+     */
+    private class EnterButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            model.enterTask(taskList.getSelectedIndex());
+        }
+    }
+    
+    /**
+     * A listener that completes the selected task when notified.
+     */
+    private class FinishButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            model.completeTask(taskList.getSelectedIndex());
+        }
+    }
+    
+    /**
+     * A listener that searches for a parent task. If found, move up the task tree. If no parent
+     * exists, exit the frame and move to a new LaunchFrame.
+     */
+    private class BackButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (model.getCurrentTask().getParent().isPresent()) {
+                model.moveUp();
+            } else {
+                setVisible(false);
+                (new LaunchFrame(model)).run();
+            }
+        }
     }
 }
