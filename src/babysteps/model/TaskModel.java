@@ -73,6 +73,16 @@ public class TaskModel extends Observable {
     }
     
     /**
+     * Get the completion status of a specific subtask.
+     * 
+     * @param taskNumber
+     * @return true if completed, false otherwise.
+     */
+    public boolean taskCompleted(int taskNumber) {
+        return currentTask.getSubtasks().get(taskNumber).completed();
+    }
+    
+    /**
      * Add a child to the current task and notify observers.
      * 
      * @param title
