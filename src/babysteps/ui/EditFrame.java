@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,32 +36,10 @@ public class EditFrame extends FrameMixin implements Observer {
         
         taskList = new TaskList(model);
         setupOptionList();
-        establishLayout();
+        singleColumnLayout(taskList, optionList);
         
         pack();
         centerFrame();
-    }
-    
-    /**
-     * Instantiate a GroupLayout. Organize the frame into a single resizable column.
-     */
-    public void establishLayout() {
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
-        
-        layout.setHorizontalGroup(
-            layout.createSequentialGroup()
-               .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(taskList, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(optionList))
-        );
-        layout.setVerticalGroup(
-            layout.createSequentialGroup()
-                .addComponent(taskList, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(optionList)
-        );
     }
     
     /**
