@@ -13,6 +13,6 @@ public class Driver {
 
     public static void main(String[] args) {
         TaskModel model = new TaskModel();
-        SwingUtilities.invokeLater(new IntroFrame(model));
+        SwingUtilities.invokeLater(new LaunchFrame(model));
     }
 }

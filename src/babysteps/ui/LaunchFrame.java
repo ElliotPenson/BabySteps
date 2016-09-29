@@ -12,7 +12,7 @@ import babysteps.model.TaskModel;
  * 
  * @author ejnp
  */
-public class IntroFrame extends FrameMixin implements Runnable {
+public class LaunchFrame extends FrameMixin implements Runnable {
 
     private static final long serialVersionUID = 1L;
     
@@ -25,7 +25,7 @@ public class IntroFrame extends FrameMixin implements Runnable {
      * 
      * @param model
      */
-    public IntroFrame(TaskModel model) {
+    public LaunchFrame(TaskModel model) {
         super("BabySteps", model);
     }
     
