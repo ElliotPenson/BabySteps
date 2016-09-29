@@ -29,17 +29,17 @@ public class IntroFrame extends FrameMixin implements Runnable {
         super("BabySteps", model);
     }
     
-    public class EditButtonListener implements ActionListener {
+    private class EditButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
             (new EditFrame(model)).run();
         }
     }
     
-    public class NextButtonListener implements ActionListener {
+    private class StepButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            // TODO
+            (new TaskSelectionFrame(model)).run();
         }
     }
 
@@ -48,11 +48,11 @@ public class IntroFrame extends FrameMixin implements Runnable {
      */
     @Override
     public void run() {
-        JButton nextButton = new JButton("Take a Step");
-        nextButton.addActionListener(new NextButtonListener());
+        JButton stepButton = new JButton("Take a Step");
+        stepButton.addActionListener(new StepButtonListener());
         JButton editButton = new JButton("Edit Tasks");
         editButton.addActionListener(new EditButtonListener());
-        singleColumnLayout(nextButton, editButton);
+        singleColumnLayout(stepButton, editButton);
         
         setSize(WIDTH, HEIGHT);
         centerFrame();
