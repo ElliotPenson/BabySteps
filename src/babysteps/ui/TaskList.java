@@ -33,6 +33,9 @@ public class TaskList extends JList<String> implements Observer {
         update(null, null);
     }
 
+    /**
+     * Update the list of task titles. Called when a change has been made to the model. 
+     */
     @Override
     public void update(Observable o, Object arg) {
         setListData(model.subtaskNames().toArray(new String[0]));

@@ -17,7 +17,7 @@ import babysteps.model.TaskModel;
  * 
  * @author ejnp
  */
-public class EditFrame extends FrameMixin implements Observer {
+public class EditFrame extends FrameMixin implements Observer, Runnable {
 
     private static final long serialVersionUID = 1L;
         
@@ -26,20 +26,15 @@ public class EditFrame extends FrameMixin implements Observer {
     private JPanel optionList;
     
     /**
-     * Constructor. Add the TaskList and option JButtons, resize, and center.
+     * Constructor. Connect this frame to the model and instantiate components.
      * 
      * @param model
      */
     public EditFrame(TaskModel model) {
         super(model.getCurrentTask().getTitle(), model);
         model.addObserver(this);
-        
         taskList = new TaskList(model);
         setupOptionList();
-        singleColumnLayout(taskList, optionList);
-        
-        pack();
-        centerFrame();
     }
     
     /**
@@ -108,5 +103,16 @@ public class EditFrame extends FrameMixin implements Observer {
     public void update(Observable o, Object arg) {
         setTitle(model.getCurrentTask().getTitle());
         pack();
+    }
+    
+    /**
+     * Add the TaskList and option JButtons in a GroupLayout, resize, and center.
+     */
+    @Override
+    public void run() {
+        singleColumnLayout(taskList, optionList);
+        pack();
+        centerFrame();
+        setVisible(true);
     }
 }
