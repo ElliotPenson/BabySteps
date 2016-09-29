@@ -27,7 +27,7 @@ also empowers and gives you a sense of achievement on your journey.
 
 ## Screenshot
 
-![BabySteps](screenshot.png)
+<img src="screenshot.png" width="350">
 
 ## Design
 
