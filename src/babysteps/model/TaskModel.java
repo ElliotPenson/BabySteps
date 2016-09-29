@@ -128,6 +128,17 @@ public class TaskModel extends Observable {
     }
     
     /**
+     * Finish a specific subtask.
+     * 
+     * @param taskNumber
+     */
+    public void completeTask(int taskNumber) {
+        currentTask.getSubtasks().get(taskNumber).setCompleted();
+        setChanged();
+        notifyObservers();
+    }
+    
+    /**
      * Go to the task above this one in the task tree and notify observers.
      */
     public void moveUp() {

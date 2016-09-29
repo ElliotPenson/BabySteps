@@ -82,7 +82,7 @@ public class EditFrame extends FrameMixin implements Observer, Runnable {
         JButton finishButton = new JButton("Finish");
         finishButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException();
+                model.completeTask(taskList.getSelectedIndex());
             }
         });
         optionList.add(finishButton);
