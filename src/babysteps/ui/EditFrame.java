@@ -90,7 +90,12 @@ public class EditFrame extends FrameMixin implements Observer, Runnable {
         JButton backButton = new JButton("Back");
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                model.moveUp();
+                if (model.getCurrentTask().getParent().isPresent()) {
+                    model.moveUp();
+                } else {
+                    setVisible(false);
+                    (new LaunchFrame(model)).run();
+                }
             }
         });
         optionList.add(backButton);
